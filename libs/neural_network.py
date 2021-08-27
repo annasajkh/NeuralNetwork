@@ -169,6 +169,7 @@ class NeuralNetwok:
 
 def load_nn(file : str) -> NeuralNetwok:
     print("model loaded from " + file)
+    
     data : ndarray = np.load(file, allow_pickle=True)
     nn = NeuralNetwok(data[2][0], data[2][1], data[2][2], data[2][3])
     nn.set_learning_rate(data[2][4])
