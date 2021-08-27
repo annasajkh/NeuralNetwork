@@ -9,11 +9,15 @@ for i in range(5_000):
     output = [inputs[0] ^ inputs[1]]
     nn.train(inputs, output)
 
-print(f"real anwser is {0 ^ 0}")
+
+nn.save("model.npy")
+nn = load_nn("model.npy")
+
+print(f"real answer is {0 ^ 0}")
 print(f"ai prediction is {nn.forward([0, 0])[0]}")
-print(f"real anwser is {0 ^ 1}")
+print(f"real answer is {0 ^ 1}")
 print(f"ai prediction is {nn.forward([0, 1])[0]}")
-print(f"real anwser is {1 ^ 0}")
+print(f"real answer is {1 ^ 0}")
 print(f"ai prediction is {nn.forward([1, 0])[0]}")
-print(f"real anwser is {1 ^ 1}")
+print(f"real answer is {1 ^ 1}")
 print(f"ai prediction is {nn.forward([1, 1])[0]}")

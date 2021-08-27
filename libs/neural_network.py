@@ -1,6 +1,6 @@
 from typing import List
 
-from numpy import float64
+from numpy import float64, ndarray
 from libs.activation_functions import *
 
 class NeuralNetwok:
@@ -17,6 +17,8 @@ class NeuralNetwok:
         self.learning_rate : float = 0.01
         self.expected_output : np.ndarray = None
         self.weights_arr : List[float] = [0] * len(self.weights)
+        self.hidden_activation : ActivationFunction = leaky_relu
+        self.output_activation : ActivationFunction = sigmoid
 
         # make the network with size of input + hidden_layer_count + output
         self.network : List[np.ndarray]= [np.empty(shape=(input_size,1)),*[np.empty(shape=(hidden_layer_size,1)) for i in range(hidden_layer_count)], np.empty(shape=(output_size,1))]
@@ -153,3 +155,24 @@ class NeuralNetwok:
         # feedforward
         for i in range(1, len(self.network)):
             self.preprocess(i, True)
+    
+    def save(self, file : str) -> None:
+        data : ndarray = np.array([ self.weights, 
+                                    self.biases, 
+                                    [self.input_size, self.hidden_layer_size, self.output_size, self.hidden_layer_count, self.learning_rate],
+                                    [self.hidden_activation.id,self.output_activation.id]],dtype=object)
+        
+        np.save(file, data)
+
+        print("model saved to " + file)
+
+def load_nn(file : str) -> NeuralNetwok:
+    print("model loaded from " + file)
+    data : ndarray = np.load(file, allow_pickle=True)
+    nn = NeuralNetwok(data[2][0], data[2][1], data[2][2], data[2][3])
+    nn.set_learning_rate(data[2][4])
+    nn.set_activation_functions(get_function(data[3][0]), get_function(data[3][1]))
+    nn.weights = data[0]
+    nn.biases = data[1]
+
+    return nn
