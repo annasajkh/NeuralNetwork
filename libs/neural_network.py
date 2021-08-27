@@ -14,7 +14,7 @@ class NeuralNetwok:
         self.hidden_layer_size : int = hidden_layer_size
         self.output_size : int = output_size
         self.hidden_layer_count : int = hidden_layer_count
-        self.learning_rate : float = 0.01
+        self.learning_rate : float = 0.001
         self.expected_output : np.ndarray = None
         self.weights_arr : List[float] = [0] * len(self.weights)
         self.hidden_activation : ActivationFunction = leaky_relu
@@ -59,7 +59,7 @@ class NeuralNetwok:
         self.output_activation = output_activation
     
     def set_learning_rate(self, learning_rate : float) -> None:
-        """set the learning rate default is 0.01"""
+        """set the learning rate default is 0.001"""
         self.learning_rate = learning_rate
     
     def preprocess(self, i: int, train: int) -> None:
