@@ -31,17 +31,17 @@ class NeuralNetwok:
             # make this if it's a hidden layer
             if i > 1 and i != len(self.network) - 1:
                 # weight from hidden to hidden
-                weight = np.random.rand(hidden_layer_size, hidden_layer_size) * 4 - 2
+                weight = np.random.rand(hidden_layer_size, hidden_layer_size)
             else:
                 # make this is it's a output layer
                 if i == len(self.network) - 1:
                     # weight from hidden to output
-                    weight = np.random.rand(output_size, hidden_layer_size) * 4 - 2
+                    weight = np.random.rand(output_size, hidden_layer_size)
                 
                 # make this is it's a input layer
                 else:
                     # weight from input to hidden
-                    weight = np.random.rand(hidden_layer_size, input_size) * 4 - 2
+                    weight = np.random.rand(hidden_layer_size, input_size)
             
             self.weights[i - 1] = weight
 
