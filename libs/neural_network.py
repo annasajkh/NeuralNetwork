@@ -166,6 +166,7 @@ class NeuralNetwok:
 
         print("model saved to " + file)
 
+
 def load_nn(file : str) -> NeuralNetwok:
     print("model loaded from " + file)
     data : ndarray = np.load(file, allow_pickle=True)
