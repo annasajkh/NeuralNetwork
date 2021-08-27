@@ -1,6 +1,5 @@
 import random
-from neural_network import NeuralNetwok
-from activation_functions import *
+from libs.neural_network import *
 
 nn = NeuralNetwok(input_size=2, hidden_layer_size=10, output_size=1,hidden_layer_count=3)
 nn.set_activation_functions(hidden_activation=leaky_relu, output_activation=sigmoid)

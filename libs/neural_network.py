@@ -1,6 +1,7 @@
 from typing import List
-from activation_functions import ActivationFunction
-import numpy as np
+
+from numpy import float64
+from libs.activation_functions import *
 
 class NeuralNetwok:
 
@@ -127,6 +128,7 @@ class NeuralNetwok:
     def backpropagation(self, output: np.ndarray) -> None:
         self.expected_output -= output
 
+
         # get all errors
         errors : List[np.ndarray] = self.get_all_errors(self.expected_output)
 
@@ -137,13 +139,13 @@ class NeuralNetwok:
     def train(self, input : List[float], expected_output : List[float]) -> None:
         # checking if expected output length is greater than output size
         if len(expected_output) > self.output_size:
-            raise Exception("Error expected output is bigger than the output size");
+            raise Exception("Error expected output is bigger than the output size")
         
         # checking if input length is greater than input size
         if len(input) > self.input_size:
-            raise Exception("Error input is bigger than the input size");
+            raise Exception("Error input is bigger than the input size")
 
-        self.expected_output = expected_output;
+        self.expected_output = np.array(expected_output, dtype=float64).reshape(-1,1)
 
         # pass input to input layer
         self.network[0] = np.array(input).reshape(-1,1)
