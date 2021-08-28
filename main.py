@@ -3,8 +3,9 @@ from libs.neural_network import *
 
 nn = NeuralNetwok(input_size=2, hidden_layer_size=10, output_size=1,hidden_layer_count=3)
 nn.set_activation_functions(hidden_activation=leaky_relu, output_activation=sigmoid)
+nn.set_learning_rate(0.001)
 
-for i in range(5_000):
+for i in range(10_000):
     inputs = [random.randint(0, 1), random.randint(0, 1)]
     output = [inputs[0] ^ inputs[1]]
     nn.train(inputs, output)
