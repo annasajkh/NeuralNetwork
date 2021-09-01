@@ -1,6 +1,6 @@
 import random
 from libs.layer_dense import LayerDense
-from libs.activation_functions import sigmoid, leaky_relu
+from libs.activation_functions import *
 import numpy as np
 from libs.neural_network import NeuralNetwork, load_nn
 
@@ -8,13 +8,13 @@ from libs.neural_network import NeuralNetwork, load_nn
 nn = NeuralNetwork([LayerDense(2, 16, leaky_relu), 
                     LayerDense(16, 8,leaky_relu), 
                     LayerDense(8, 4,leaky_relu),
-                    LayerDense(4, 1,sigmoid)])
+                    LayerDense(4, 2,sigmoid)])
 
 nn.set_learning_rate(0.01)
 
-for i in range(1_000):
+for i in range(1):
     inputs = [random.randint(0, 1), random.randint(0, 1)]
-    expected_output = [inputs[0] ^ inputs[1]]
+    expected_output = [inputs[0] , inputs[1]]
     nn.train(inputs, expected_output)
 
 nn.save("model.npy")

@@ -18,10 +18,7 @@ class LayerDense:
     
     def step(self, errors: np.ndarray, layer : ndarray, after_layer : np.ndarray, learning_rate : float) -> None:
         """change weights and biases by errors"""
-        gradient : ndarray = get_function(self.activation_function_id).derivative(layer)
-        gradient *= errors
-        gradient *= learning_rate
-        
+        gradient : ndarray = get_function(self.activation_function_id).derivative(layer) * errors * learning_rate
         delta_weights : np.ndarray = np.dot(gradient, after_layer.T)
 
         self.weights += delta_weights

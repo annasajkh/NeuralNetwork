@@ -36,7 +36,6 @@ class NeuralNetwork:
         
         return errors
 
-
     
     def train(self, input : ndarray, expected_output : ndarray) -> None:
         input = np.array(input).reshape(-1, 1)
@@ -50,7 +49,8 @@ class NeuralNetwork:
     def save(self, filename : str) -> None:
         np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function_id]for layer in self.layers], self.learning_rate], dtype=object))
         print(f"saved to {filename}")
-    
+
+
 def load_nn(filename : str) -> NeuralNetwork:
     data : ndarray = np.load(filename, allow_pickle=True)
     layers = []
