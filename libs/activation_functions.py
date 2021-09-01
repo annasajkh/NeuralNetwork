@@ -1,10 +1,9 @@
 from typing import Callable
 import numpy as np
-from numpy.core.fromnumeric import reshape
 
 class ActivationFunction:
-    def __init__(self, activation_function : Callable[[np.ndarray], np.ndarray], derivative : Callable[[np.ndarray],  np.ndarray], id : int) -> None:
-        self.activation_function = activation_function
+    def __init__(self, function : Callable[[np.ndarray], np.ndarray], derivative : Callable[[np.ndarray],  np.ndarray], id : int) -> None:
+        self.function = function
         self.derivative = derivative
         self.id = id
     

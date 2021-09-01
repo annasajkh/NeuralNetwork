@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import ndarray
-from libs.activation_function import *
+from libs.activation_functions import *
 
 class LayerDense:
     def __init__(self, num_input : ndarray, num_output : ndarray, activation_function : ActivationFunction) -> None:

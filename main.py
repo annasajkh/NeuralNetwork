@@ -1,6 +1,6 @@
 import random
 from libs.layer_dense import LayerDense
-from libs.activation_function import sigmoid, leaky_relu
+from libs.activation_functions import sigmoid, leaky_relu
 import numpy as np
 from libs.neural_network import NeuralNetwork, load_nn
 

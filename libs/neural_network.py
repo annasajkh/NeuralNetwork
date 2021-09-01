@@ -1,4 +1,4 @@
-from libs.activation_function import get_function
+from libs.activation_functions import get_function
 from typing import List
 from numpy import ndarray
 from libs.layer_dense import LayerDense
