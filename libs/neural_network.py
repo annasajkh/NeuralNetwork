@@ -41,7 +41,7 @@ class NeuralNetwork:
         input = np.array(input).reshape(-1, 1)
         output : ndarray = self.forward(input)
 
-        errors = self.get_all_errors(expected_output - output)
+        errors = self.get_all_errors(np.array(expected_output, dtype=np.float64).reshape(-1,1) - output)
 
         for i in range(len(errors) - 1, -1, -1):
             self.layers[i].step(errors[i], self.network[i + 1], self.network[i], self.learning_rate)
