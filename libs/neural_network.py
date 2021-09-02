@@ -16,10 +16,10 @@ class NeuralNetwork:
         self.learning_rate : float = learning_rate
     
     def forward(self, input : ndarray) -> ndarray:
+        """feed forward through entire network"""
         input = np.array(input, dtype=np.float64).reshape(-1, 1)
 
         assert len(input.flatten()) == self.layers[0].num_input, "input size is not the same as input layer size"
-        """feed forward through entire network"""
         self.network : List[ndarray] = []
         self.network.append(input)
 
@@ -30,11 +30,10 @@ class NeuralNetwork:
     
     def get_all_errors(self, output_error : np.ndarray) -> List[np.ndarray]:
         """get all layers errors"""
-        # make array and set last index = error
+
         errors : List[np.ndarray] = [0] * len(self.layers)
         errors[len(errors) - 1] = output_error
 
-        # calculate error on index i and pass it on index before it
         for i in range(len(errors) - 1, 0,-1):
             errors[i - 1] = self.layers[i].get_errors(errors[i])
         
@@ -42,6 +41,7 @@ class NeuralNetwork:
 
     
     def train(self, input : ndarray, target : ndarray) -> None:
+        """train the network"""
         target = np.array(target, dtype=np.float64).reshape(-1,1)
 
         assert len(target) == self.layers[-1].num_output, "target size is not the same as output layer size"
