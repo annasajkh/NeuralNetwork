@@ -4,8 +4,6 @@ from numpy import ndarray
 from libs.layer_dense import LayerDense
 import numpy as np
 
-def cross_entropy(output : ndarray, target : ndarray) -> np.float64:
-    return np.sum(-target * np.log(output))
 
 class NeuralNetwork:
     def __init__(self, layers : List[LayerDense]) -> None:
