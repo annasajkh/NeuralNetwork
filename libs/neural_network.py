@@ -4,6 +4,9 @@ from numpy import ndarray
 from libs.layer_dense import LayerDense
 import numpy as np
 
+def cross_entropy(output : ndarray, target : ndarray) -> np.float64:
+    return np.sum(-target * np.log(output))
+
 class NeuralNetwork:
     def __init__(self, layers : List[LayerDense]) -> None:
         self.layers : LayerDense = layers
@@ -15,6 +18,9 @@ class NeuralNetwork:
         self.learning_rate : float = learning_rate
     
     def forward(self, input : ndarray) -> ndarray:
+        input = np.array(input, dtype=np.float64).reshape(-1, 1)
+
+        assert len(input.flatten()) == self.layers[0].num_input, "input size is not the same as input layer size"
         """feed forward through entire network"""
         self.network : List[ndarray] = []
         self.network.append(input)
@@ -37,17 +43,20 @@ class NeuralNetwork:
         return errors
 
     
-    def train(self, input : ndarray, expected_output : ndarray) -> None:
-        input = np.array(input).reshape(-1, 1)
+    def train(self, input : ndarray, target : ndarray) -> None:
+        target = np.array(target, dtype=np.float64).reshape(-1,1)
+
+        assert len(target) == self.layers[-1].num_output, "target size is not the same as output layer size"
+        
         output : ndarray = self.forward(input)
 
-        errors = self.get_all_errors(np.array(expected_output, dtype=np.float64).reshape(-1,1) - output)
+        errors = self.get_all_errors(target - output)
 
         for i in range(len(errors) - 1, -1, -1):
             self.layers[i].step(errors[i], self.network[i + 1], self.network[i], self.learning_rate)
     
     def save(self, filename : str) -> None:
-        np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function_id]for layer in self.layers], self.learning_rate], dtype=object))
+        np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function_id, layer.num_input, layer.num_output]for layer in self.layers], self.learning_rate], dtype=object))
         print(f"saved to {filename}")
 
 
@@ -56,7 +65,7 @@ def load_nn(filename : str) -> NeuralNetwork:
     layers = []
 
     for layer_data in data[0]:
-        layer : LayerDense = LayerDense(0,0,get_function(layer_data[2]))
+        layer : LayerDense = LayerDense(layer_data[3],layer_data[4],get_function(layer_data[2]))
         layer.weights = layer_data[0]
         layer.biases = layer_data[1]
         layers.append(layer)
