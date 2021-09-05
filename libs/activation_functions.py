@@ -13,6 +13,7 @@ def softmax(x):
     exps = np.exp(shiftx)
     return exps / np.sum(exps)
 
+
 sigmoid = ActivationFunction(lambda arr : 1 / (1 + (np.exp(-arr))) , lambda arr : arr * (1 - arr), 0)
 leaky_relu = ActivationFunction(lambda arr : ((arr > 0) * arr) + ((arr <= 0) * arr * 0.01), lambda arr : ((arr > 0) * 1) + ((arr <= 0) * 0.01), 1)
 tanh = ActivationFunction(lambda arr: np.tanh(arr), lambda arr : 1 - arr ** 2, 2)
