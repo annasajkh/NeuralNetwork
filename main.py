@@ -9,7 +9,6 @@ nn = NeuralNetwork([LayerDense(2, 16, leaky_relu),
                     LayerDense(16, 16,leaky_relu),
                     LayerDense(16, 2, softmax)])
 
-nn.set_learning_rate(0.01)
 
 for i in range(10_000):
     inputs = [random.randint(0, 1), random.randint(0, 1)]
