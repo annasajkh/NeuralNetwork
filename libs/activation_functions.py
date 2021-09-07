@@ -8,7 +8,7 @@ class ActivationFunction:
         self.id = id
 
 
-def softmax(x):
+def softmax(x : ndarray) -> ndarray:
     shiftx = x - np.max(x)
     exps = np.exp(shiftx)
     return exps / np.sum(exps)
