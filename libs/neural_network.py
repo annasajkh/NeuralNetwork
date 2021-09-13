@@ -28,12 +28,6 @@ class NeuralNetwork:
 
         return self.network[-1]
     
-    def backward(self, output_error : ndarray) -> None:
-        errors = self.get_all_errors(output_error)
-
-        for i in range(len(errors) - 1, -1, -1):
-            self.layers[i].step(errors[i], self.network[i + 1], self.network[i], self.learning_rate)
-    
     def get_all_errors(self, output_error : np.ndarray) -> List[np.ndarray]:
         """get all layers errors"""
 
@@ -44,8 +38,9 @@ class NeuralNetwork:
             errors[i - 1] = self.layers[i].get_errors(errors[i])
         
         return errors
+
     
-    def train(self, input : ndarray, target : ndarray) -> None:
+    def train(self, input : ndarray, target : ndarray) -> ndarray:
         """train the network"""
         target = np.array(target, dtype=np.float64).reshape(-1,1)
 
@@ -53,7 +48,12 @@ class NeuralNetwork:
         
         output : ndarray = self.forward(input)
 
-        self.backward(target - output)
+        errors = self.get_all_errors(target - output)
+
+        for i in range(len(errors) - 1, -1, -1):
+            self.layers[i].step(errors[i], self.network[i + 1], self.network[i], self.learning_rate)
+        
+        return output
     
     def save(self, filename : str) -> None:
         np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function_id, layer.num_input, layer.num_output]for layer in self.layers], self.learning_rate], dtype=object))
