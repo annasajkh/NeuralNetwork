@@ -4,7 +4,7 @@ from libs.activation_functions import *
 
 class LayerDense:
     def __init__(self, num_input : ndarray, num_output : ndarray, activation_function : ActivationFunction) -> None:
-        self.weights : ndarray = np.random.rand(num_output, num_input) * 4 - 2
+        self.weights : ndarray = np.random.randn(num_output, num_input)
         self.biases : ndarray = np.zeros((num_output, 1))
         self.activation_function_id : ActivationFunction = activation_function.id
         self.activation_function = get_function(self.activation_function_id)

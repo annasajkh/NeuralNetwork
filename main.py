@@ -9,7 +9,6 @@ nn = NeuralNetwork([LayerDense(2, 16, leaky_relu),
                     LayerDense(16, 16,leaky_relu),
                     LayerDense(16, 2, softmax)])
 
-
 for i in range(10_000):
     inputs = [random.randint(0, 1), random.randint(0, 1)]
     expected_output = [[0, 1],[1, 0]][inputs[0] ^ inputs[1]]
