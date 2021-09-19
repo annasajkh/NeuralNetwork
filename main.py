@@ -6,7 +6,8 @@ from libs.neural_network import NeuralNetwork, load_nn
 
 
 nn = NeuralNetwork([LayerDense(2, 16, leaky_relu), 
-                    LayerDense(16, 16,leaky_relu),
+                    LayerDense(16, 16, leaky_relu),
+                    LayerDense(16, 16, leaky_relu),
                     LayerDense(16, 2, softmax)])
 
 for i in range(10_000):

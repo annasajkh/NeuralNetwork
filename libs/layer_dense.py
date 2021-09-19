@@ -21,11 +21,7 @@ class LayerDense:
     
     def step(self, errors: np.ndarray, layer : ndarray, after_layer : np.ndarray, learning_rate : float) -> None:
         """change weights and biases by errors"""
-
-        if self.activation_function_id  != softmax.id:
-            gradient : ndarray = self.activation_function.derivative(layer) * errors * learning_rate
-        else:
-            gradient : ndarray = (layer - errors) * learning_rate
+        gradient : ndarray = self.activation_function.derivative(layer) * errors * learning_rate
 
         delta_weights : np.ndarray = np.dot(gradient, after_layer.T)
 
