@@ -57,7 +57,7 @@ class NeuralNetwork:
         return output
     
     def save(self, filename : str) -> None:
-        np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function_id, layer.num_input, layer.num_output]for layer in self.layers], self.learning_rate], dtype=object))
+        np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function.id, layer.num_input, layer.num_output]for layer in self.layers], self.learning_rate], dtype=object))
         print(f"saved to {filename}")
 
 
