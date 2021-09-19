@@ -21,7 +21,7 @@ def d_softmax(arr):
             if i == j:
                 jacobian_m[i][j] = arr[i] * (1-arr[i])
             else:
-                jacobian_m[i][j] = -arr[i]*arr[j]
+                jacobian_m[i][j] = -arr[i] * arr[j]
 
     return jacobian_m
 
@@ -29,8 +29,11 @@ def d_softmax(arr):
 sigmoid = ActivationFunction(lambda arr : np.exp(np.fmin(arr, 0)) / (1 + np.exp(-np.abs(arr))), lambda arr : arr * (1 - arr), 0)
 leaky_relu = ActivationFunction(lambda arr : ((arr > 0) * arr) + ((arr <= 0) * arr * 0.01), lambda arr : ((arr > 0) * 1) + ((arr <= 0) * 0.01), 1)
 tanh = ActivationFunction(lambda arr: np.tanh(arr), lambda arr : 1 - arr ** 2, 2)
-relu = ActivationFunction(lambda arr : (arr > 0) * arr, lambda arr : (arr > 0) * 1, 3)
+relu = ActivationFunction(lambda arr : (arr > 0) * arr, lambda arr : arr > 0, 3)
 softmax = ActivationFunction(softmax, d_softmax, 4)
+step = ActivationFunction(lambda x: x > 0, lambda x: x > 0, 5)
+linear = ActivationFunction(lambda x : x, lambda x: x * 0 + 1, 6)
+
 
 def get_function(id: int) -> ActivationFunction:
     if id == sigmoid.id:
@@ -43,5 +46,9 @@ def get_function(id: int) -> ActivationFunction:
         return relu
     elif id == softmax.id:
         return softmax
+    elif id == step.id:
+        return step
+    elif id == linear.id:
+        return linear
     else:
         raise Exception("invalid id")
