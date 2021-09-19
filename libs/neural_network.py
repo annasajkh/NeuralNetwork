@@ -20,6 +20,7 @@ class NeuralNetwork:
         input = np.array(input, dtype=np.float64).reshape(-1, 1)
 
         assert len(input.flatten()) == self.layers[0].num_input, "input size is not the same as input layer size"
+        
         self.network : List[ndarray] = []
         self.network.append(input)
 
