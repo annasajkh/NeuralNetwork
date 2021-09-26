@@ -3,12 +3,12 @@ from libs.layer_dense import LayerDense
 from libs.activation_functions import *
 import numpy as np
 from libs.neural_network import NeuralNetwork, load_nn
-
+import libs.loss_functions as loss_functions
 
 nn = NeuralNetwork([LayerDense(2, 16, leaky_relu), 
                     LayerDense(16, 16, leaky_relu),
                     LayerDense(16, 16, leaky_relu),
-                    LayerDense(16, 2, softmax)])
+                    LayerDense(16, 2, softmax)], loss_functions.CrossEntropy)
 
 for i in range(10_000):
     inputs = [random.randint(0, 1), random.randint(0, 1)]

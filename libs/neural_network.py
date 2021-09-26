@@ -1,16 +1,20 @@
-from libs.activation_functions import get_function
 from typing import List
 from numpy import ndarray
 from libs.layer_dense import LayerDense
+from typing import Callable
+
+import libs.activation_functions as activation_functions
+import libs.loss_functions as loss_functions
 import numpy as np
 
 
 class NeuralNetwork:
-    def __init__(self, layers : List[LayerDense]) -> None:
+    def __init__(self, layers : List[LayerDense], loss_function : Callable[[ndarray, ndarray], ndarray]) -> None:
         self.layers : LayerDense = layers
         self.learning_rate : float = 0.01
         self.network : List[ndarray] = None
-    
+        self.loss_function =  loss_function
+
     def set_learning_rate(self, learning_rate : float) -> None:
         """set the learning rate default is 0.01"""
         self.learning_rate : float = learning_rate
@@ -49,7 +53,7 @@ class NeuralNetwork:
         
         output : ndarray = self.forward(input)
 
-        errors = self.get_all_errors(target - output)
+        errors = self.get_all_errors(self.loss_function(output, target))
 
         for i in range(len(errors) - 1, -1, -1):
             self.layers[i].step(errors[i], self.network[i + 1], self.network[i], self.learning_rate)
@@ -57,7 +61,7 @@ class NeuralNetwork:
         return output
     
     def save(self, filename : str) -> None:
-        np.save(filename, np.array([[[layer.weights, layer.biases, layer.activation_function.id, layer.num_input, layer.num_output]for layer in self.layers], self.learning_rate], dtype=object))
+        np.save(filename, np.array([[[layer.weights, layer.biases, activation_functions.get_function_id(layer.activation_function), layer.num_input, layer.num_output] for layer in self.layers], self.learning_rate, loss_functions.get_function_id(self.loss_function)], dtype=object))
         print(f"saved to {filename}")
 
 
@@ -66,12 +70,12 @@ def load_nn(filename : str) -> NeuralNetwork:
     layers = []
 
     for layer_data in data[0]:
-        layer : LayerDense = LayerDense(layer_data[3],layer_data[4],get_function(layer_data[2]))
+        layer : LayerDense = LayerDense(layer_data[3],layer_data[4],activation_functions.get_function(layer_data[2]))
         layer.weights = layer_data[0]
         layer.biases = layer_data[1]
         layers.append(layer)
     
-    nn = NeuralNetwork(layers)
+    nn = NeuralNetwork(layers, loss_functions.get_function(data[2]))
     nn.set_learning_rate(data[1])
 
     print(f"loaded from {filename}")
