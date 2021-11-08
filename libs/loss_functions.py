@@ -2,7 +2,7 @@ import numpy as np
 from typing import Callable
 from numpy import ndarray
 
-def MAE(prediction : np.array, target : np.array):
+def MAE(prediction, target):
 	return target - prediction
 
 loss_functions_arr = [MAE]
