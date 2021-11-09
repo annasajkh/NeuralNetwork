@@ -2,8 +2,8 @@ import numpy as np
 from typing import Callable
 from numpy import ndarray
 
-def MAE(prediction, target):
-	return target - prediction
+def MAE(prediction : ndarray, target : ndarray) -> ndarray:
+    return target - prediction
 
 loss_functions_arr = [MAE]
 

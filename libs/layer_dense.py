@@ -14,13 +14,13 @@ class LayerDense:
         """feedforward the input and returns the output of this layer"""
         return self.activation_function.function(np.dot(self.weights, np.array(input).reshape(-1,1)) + self.biases)
     
-    def get_errors(self, errors : ndarray) -> ndarray:
-        """get the errors of this layer using other errors (usually it's the layer before this layer in feedforward network)"""
-        return np.dot(self.weights.T, errors)
+    def get_error(self, error : ndarray) -> ndarray:
+        """get the error of this layer using other error (usually it's the layer before this layer in feedforward network)"""
+        return np.dot(self.weights.T, error)
     
-    def step(self, errors: np.ndarray, layer : ndarray, after_layer : np.ndarray, learning_rate : float) -> None:
-        """change weights and biases by errors"""
-        gradient : ndarray = self.activation_function.derivative(layer) * errors * learning_rate
+    def step(self, error: np.ndarray, layer : ndarray, after_layer : np.ndarray, learning_rate : float) -> None:
+        """change weights and biases by error"""
+        gradient : ndarray = self.activation_function.derivative(layer) * error * learning_rate
 
         delta_weights : np.ndarray = np.dot(gradient, after_layer.T)
 

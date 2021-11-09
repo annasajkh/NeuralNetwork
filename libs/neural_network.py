@@ -40,7 +40,7 @@ class NeuralNetwork:
         errors[len(errors) - 1] = output_error
 
         for i in range(len(errors) - 1, 0,-1):
-            errors[i - 1] = self.layers[i].get_errors(errors[i])
+            errors[i - 1] = self.layers[i].get_error(errors[i])
         
         return errors
 
